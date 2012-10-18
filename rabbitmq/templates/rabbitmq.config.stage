@@ -1,0 +1,4 @@
+[
+{rabbit,[{cluster_nodes, ['<%= rabbit_stage %>']}]}
+].
+

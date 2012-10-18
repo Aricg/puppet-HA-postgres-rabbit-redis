@@ -1,0 +1,7 @@
+//This file maintained by puppet
+//
+//
+//
+//auto_update_debian 1.0
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";

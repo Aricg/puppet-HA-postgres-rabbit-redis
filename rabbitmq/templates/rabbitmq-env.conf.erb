@@ -1,0 +1,6 @@
+SERVER_START_ARGS="+K true +A300 +P512000 -setcookie <%=secret %> -kernel inet_default_listen_options [{nodelay,true},{sndbuf,32768},{recbuf,32768}]"
+MULTI_START_ARGS="-setcookie <%=secret %>"
+CTL_ERL_ARGS="-setcookie <%=secret %>"
+CONFIG_FILE=/etc/rabbitmq/rabbitmq
+
+

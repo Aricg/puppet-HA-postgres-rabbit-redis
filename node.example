@@ -1,0 +1,149 @@
+#example for two node setup
+
+node shared {
+
+include standardize_admin_environment
+include auto_update_security
+
+###IPtables (blocks input chain on public interface) this will need to be modified if you do not have a private network
+# Class['iptables::install'] -> Class['iptables::service']
+include iptables::install
+include iptables::service
+
+###RABBIT Class['rabbitmq::repo'] -> Class['rabbitmq::config'] -> Class['rabbitmq::service'] Class -> ['rabbitmq::limits'] -> Class['rabbitmq::database'] -> Class['rabbitmq::database::guest']
+
+include rabbitmq::repo
+class { "rabbitmq::config":
+        multiple_nodes => 'yes',
+        port => 5672,
+        secret => 'PASSWORD',
+        node1 => $rabbit_node1,
+        node2 => $rabbit_node2,
+}
+
+include rabbitmq::service
+class { "rabbitmq::limits":
+        ulimit => 65330,
+}
+class { "rabbitmq::database":
+        ensure => present,
+        rabbit_username => $rabbit_user,
+        rabbit_password => $rabbit_pass,
+        rabbit_role => $rabbit_login,
+}
+#remove guest account
+class { "rabbitmq::database::guest":
+        ensure => absent,
+        rabbit_username => 'guest',
+}
+
+##Redis { Class['redis::repo'] -> Class['redis::install'] -> Class['redis::config'] ->  Class['redis::limits'] -> Class['redis::scripts'] -> Class['redis::service']
+
+include redis::repo
+include redis::install
+include redis::config
+include redis::limits
+include redis::scripts
+
+include postgres::install
+include postgres::keys
+class {"postgres::config":
+        package_name => $pg_package_name,
+        service_name => $pg_service_name,
+        service_ensure => $pg_service_ensure,
+        data_dir => $pg_data_dir,
+        conf_dir => $pg_conf_dir,
+        archive_dir => $pg_archive_dir,
+        master_ip => $default_master_ip,
+        slave_ip => $default_slave_ip,
+        app_server1 => $pg_app_server1,
+        app_server2 => $pg_app_server2,
+        repluser => $pg_repluser,
+        replpass => $pg_replpass,
+        pg_user => $pg_user,
+        pg_pass => $pg_pass,
+        pg_db1 => $pg_db1,
+        pg_db2 => $pg_db2,
+        pg_db3 => $pg_db3,
+        pg_db4 => $pg_db4,
+        test_server1 => $pg_test_server1,
+}
+
+class {"postgres::service":
+        ensure=> 'running', #Valid values are stopped, running.
+        enable=> 'true', #this doesnt seem to do anything
+}
+
+#Keepalived Class['keepalived::scripts'] -> Class['keepalived::config(defined below)'] -> Class['keepalived::service']
+
+include keepalived::scripts
+include keepalived::service
+
+
+
+}
+
+node 'Default Master' inherits shared {
+
+class {"keepalived::config":
+                priority => '150',
+                postgres_vip => $pg_vip,
+                redis_vip  => $redis_vip,
+                state => 'MASTER',
+                prempt => 'nopreempt',
+                master_ip => $default_master_ip,
+                slave_of_ip => $default_slave_ip,
+                slave_ip => $default_slave_ip,
+}
+
+
+class { "redis::service":
+                ensure          => 'running',
+                enable          => 'false',
+                start_redis     => '/etc/init.d/redis-server start-master',
+}
+
+
+
+include postgres::master
+
+include postgres::user
+
+realize(        Postgres::User::Postgres_user["replication"],
+                Postgres::User::Postgres_user["bescommp"], )
+
+include postgres::database
+
+realize(        Postgres::Database::Postgres_database["besdb"],
+                Postgres::Database::Postgres_database["clientappauth"],
+                Postgres::Database::Postgres_database["lidi"],
+                Postgres::Database::Postgres_database["comments"], )
+}
+
+
+node 'Default Standby' inherits shared {
+
+include postgres::slave
+
+class {"keepalived::config":
+        priority => 'BACKUP',
+        postgres_vip => $pg_vip,
+        redis_vip  => $redis_vip,
+        slave_of_ip => $default_master_ip,
+        state => 'BACKUP',
+        prempt => 'nopreempt',
+}
+
+#TODO I had to hardcode $default_master_ip as I coulnt not get it to evaluate inside the ''s
+class { "redis::service":
+                ensure          => 'running',
+                enable          => 'false',
+                start_redis     => '/etc/init.d/redis-server start-slave $default_master_ip  6379',
+}
+
+
+}
+
+
+
+

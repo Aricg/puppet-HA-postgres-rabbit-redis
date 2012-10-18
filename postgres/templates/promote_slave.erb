@@ -1,0 +1,5 @@
+#!/bin/bash
+slave=$1
+
+ssh  postgres@$slave "touch /tmp/trigger_file"
+

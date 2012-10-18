@@ -1,0 +1,2 @@
+#!/bin/bash
+yum update --security -y -d0 -q

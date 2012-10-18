@@ -1,0 +1,8 @@
+#!/bin/bash
+                #is rsync running
+        if cat /tmp/dont_fail_over &> /dev/null;
+then
+#echo "/tmp/dont_fail_over exist"; 
+exit 0
+        else  killall -0 postgres
+fi

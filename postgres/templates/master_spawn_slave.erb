@@ -1,0 +1,52 @@
+#!/bin/bash
+#THIS NEEDS TO BE UPDATED.
+
+desthost=$1 #slave's ip
+datadir=/var/lib/postgresql/9.2/main/
+archivedir=/var/lib/postgresql/9.2/archive/
+archivedirdest=/var/lib/postgresql/9.2/masterarchive/
+
+#flush Postgres for good measure, we only do this bc when setting up pg we are dropping re recreating the db utf8
+#psql -c "SELECT pg_start_backup('Streaming Replication', true)"
+#psql -c "SELECT pg_stop_backup()"
+
+
+#prepare for a local backup
+psql -c "SELECT pg_start_backup('Streaming Replication', true)"
+
+#prepare remove postgres server
+ssh postgres@$desthost 'rm /tmp/trigger_file; /etc/init.d/postgresql stop; mv <%= @data_dir %>recovery.done <%= @data_dir %>recovery.conf'
+
+#copy local data to remove postgres server
+rsync -C -a --delete -e ssh --exclude recovery.conf --exclude recovery.done --exclude postmaster.pid $datadir/ $desthost:$datadir/
+
+#this archives the the WAL log (ends writing to it and moves it to the $archive dir
+psql -c "SELECT pg_stop_backup()"
+
+#this rsyncs the WAL archives that are written after pg_stop_backup is called.
+rsync -C -a --delete -e ssh $archivedir $desthost:$archivedirdest
+
+#start postgres (and replication) on the remote slave database
+ssh postgres@$desthost '/etc/init.d/postgresql start'
+
+
+
+#disable failover
+#touch /tmp/dont_fail_over
+#ssh postgres@$sourcehost "touch /tmp/dont_fail_over"
+#rm /tmp/trigger_file
+###bash /etc/init.d/postgresql stop
+##mv <%= @data_dir %>recovery.done <%= @data_dir %>recovery.conf
+##ssh postgres@$sourcehost "/etc/init.d/postgresql restart"
+#ssh postgres@$sourcehost "psql -c \"SELECT pg_start_backup('Streaming Replication', true)\" postgres"
+#rsync -C -a --delete -e ssh --exclude recovery.conf --exclude recovery.done --exclude postmaster.pid  $sourcehost:$datadir/ $datadir/
+#ssh postgres@$sourcehost "psql -c \"SELECT pg_stop_backup()\" postgres"
+#rsync -C -a -e ssh $sourcehost:$archivedir $archivedirdest
+#ssh postgres@$sourcehost "/etc/init.d/postgresql stop"
+#rsync -av  -e ssh $sourcehost:$datadir/pg_xlog $datadir/pg_xlog
+#/etc/init.d/postgresql start
+#ssh postgres@$sourcehost "/etc/init.d/postgresql start"
+#rm /tmp/dont_fail_over
+#ssh postgres@$sourcehost "rm /tmp/dont_fail_over"
+
+

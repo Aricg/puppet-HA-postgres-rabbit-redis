@@ -1,0 +1,24 @@
+Define these in your top scope. Details can be found in the per-file documentation
+
+$default_master_ip = '10.x.x.x'
+$default_slave_ip = '10.x.x.x.'
+$pg_app_server1 = '10.x.x.x'
+$pg_app_server2 = '10.x.x.x'
+$pg_test_server1 = '10.X.X.X'
+$pg_repluser = 'replication'
+$pg_replpass = 'XXXXXXXXXXX'
+$pg_pass = 'XXXXXXXXXXXXXXX'
+$pg_user = 'username'
+$pg_db1 = 'first_database' 
+$pg_db2 = 'second_database'
+$pg_db3 = 'third_database'
+$pg_db4 = 'fourth_database'
+$pg_vip = '10.x.x.x'
+$redis_vip  = '10.x.x.x'
+$rabbit_vip = '10.x.x.x'
+$rabbit_user = 'rabbit_username'
+$rabbit_pass = 'xxxxxxxxxxxx'
+$rabbit_login = 'rabbit_webui_username
+$rabbit_node1 = 'rabbit@foonet001'
+$rabbit_node2 = 'rabbit@foonet002'
+
