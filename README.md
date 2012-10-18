@@ -1,7 +1,6 @@
 Puppet Modules for an HA environment 
 ====================================
-I have been working on. Services include Postgres 9.2, rabbitmq-server 2.8.7, redis-server 2.4.16. Keepalived provieds VIP's for HA. It's all coupled together and needs to be refinced, but it does infact work. I'll be updating this as I find problems in testing. 
-
+Services include Postgres 9.2, rabbitmq-server 2.8.7, redis-server 2.4.16. Keepalived provieds VIP's for HA. It's all coupled together and needs to be refined. Also I'm not running unit tests as I go, so YMMV. I'll be updating this as I find problems in testing. 
 
 This collection of modules was meant for a very specific and I'll admit rushed project, and is thus rather inflexible, there are a handful of hardcoded problems that I'll work on in the next iteration. (as I learn puppet better)
 For example, if you only have on rabbit node, you need to set multiple nodes to false, and I run some ugly logic to create the config file thereafter. 
