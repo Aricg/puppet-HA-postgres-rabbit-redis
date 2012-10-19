@@ -16,7 +16,7 @@ bash /etc/init.d/postgresql stop
 mv <%= @data_dir %>recovery.done <%= @data_dir %>recovery.conf
 
 
-ssh postgres@$sourcehost "/etc/init.d/postgresql restart"
+#ssh postgres@$sourcehost "/etc/init.d/postgresql restart"
 #put master into  backup mode
 ssh postgres@$sourcehost "psql -c \"SELECT pg_start_backup('Streaming Replication', true)\" postgres"
 
