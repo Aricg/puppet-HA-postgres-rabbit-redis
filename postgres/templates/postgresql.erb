@@ -208,7 +208,7 @@ archive_command = 'cp -i "%p" /var/lib/postgresql/9.2/archive/"%f" </dev/null'
 
 max_wal_senders = 8		# max number of walsender processes
 				# (change requires restart)
-#wal_keep_segments = 0		# in logfile segments, 16MB each; 0 disables
+wal_keep_segments = 32 		# in logfile segments, 16MB each; 0 disables
 #replication_timeout = 60s	# in milliseconds; 0 disables
 
 # - Master Server -
