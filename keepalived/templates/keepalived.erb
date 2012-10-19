@@ -45,7 +45,7 @@ vrrp_instance VI_15_REDIS {
     }
 notify_master "/etc/init.d/redis-server start-master"
 #slave of ip must be the other nodes ip address, so that IF the node fails it will call fault and try to attach to the master.
-notify_backup "/etc/init.d/start-redis-slave <%= slave_of_ip %> 6379"
+notify_backup "/etc/init.d/redis-server start-slave <%= slave_of_ip %> 6379"
 notify_fault "/etc/init.d/redis-server start-master"
 !notify_up "/usr/bin/sudo -u redis /var/lib/redis/redis.sh -m"
 !notify_down "/usr/bin/sudo -u redis /var/lib/redis/redis.sh -s"

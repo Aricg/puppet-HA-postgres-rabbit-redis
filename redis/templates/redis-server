@@ -20,8 +20,8 @@ DAEMON_ARGS=/etc/redis/redis.conf
 NAME=redis-server
 DESC=redis-server
 REDIS_COMMANDS=/usr/bin/redis-cli
-REDIS_MASTER_IP=$1
-REDIS_MASTER_PORT=$2
+REDIS_MASTER_IP=$2
+REDIS_MASTER_PORT=$3
 
 RUNDIR=/var/run/redis
 PIDFILE=$RUNDIR/redis-server.pid
@@ -82,6 +82,8 @@ case "$1" in
 		exec /usr/bin/redis-cli slaveof $REDIS_MASTER_IP $REDIS_MASTER_PORT;
 
         else
+		sleep 1;
+                exec /usr/bin/redis-cli slaveof $REDIS_MASTER_IP $REDIS_MASTER_PORT;
                 echo "failed"
 
        fi
