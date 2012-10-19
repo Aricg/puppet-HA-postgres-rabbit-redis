@@ -1,4 +1,4 @@
-#!/bin/bash #reverse all of this.
+#!/bin/bash 
 
 sourcehost=$1
 datadir=/var/lib/postgresql/9.2/main
@@ -7,27 +7,23 @@ archivedirdest=/var/lib/postgresql/9.2/archive
 
 
 #disable failover
-#
 touch /tmp/dont_fail_over
 ssh postgres@$sourcehost "touch /tmp/dont_fail_over"
-#I THINK I CAN DELETE ALL THE OLD LOG FILES RIGHT HERE BEGORE CALLING PG_START BACKUP TODO TEST
 
 #prepare local server to become the new slave server. 
-
 rm /tmp/trigger_file
 bash /etc/init.d/postgresql stop
 mv <%= @data_dir %>/recovery.done <%= @data_dir %>/recovery.conf
 
 
+#ssh postgres@$sourcehost "/etc/init.d/postgresql restart"
 #put master into  backup mode
 ssh postgres@$sourcehost "psql -c \"SELECT pg_start_backup('Streaming Replication', true)\" postgres"
 
 #copy local data to remove postgres server
-#
-rsync -C -a --delete -e ssh --exclude recovery.conf --exclude recovery.done --exclude postmaster.pid  $sourcehost:$datadir/ $datadir/
+rsync -C -av --delete -e ssh --exclude recovery.conf --exclude recovery.done --exclude postmaster.pid  --exclude pg_xlog/ $sourcehost:$datadir/ $datadir/
 
 #this archives the the WAL log (ends writing to it and moves it to the $archive dir
-#
 ssh postgres@$sourcehost "psql -c \"SELECT pg_stop_backup()\" postgres"
 
 rsync -C -a -e ssh $sourcehost:$archivedir/ $archivedirdest/
@@ -35,7 +31,7 @@ rsync -C -a -e ssh $sourcehost:$archivedir/ $archivedirdest/
 #stop postgres for a minute while we finish the rsync 
 ssh postgres@$sourcehost "/etc/init.d/postgresql stop"
 
-rsync -av  -e ssh $sourcehost:$datadir/pg_xlog $datadir/pg_xlog
+rsync -av --delete  -e ssh $sourcehost:$datadir/pg_xlog/ $datadir/pg_xlog/
 
 #this rsyncs the WAL archives that are written after pg_stop_backup is called.
 #rsync -C -a --delete -e ssh $sourcehost:$archivedir $archivedirdest
@@ -49,3 +45,4 @@ ssh postgres@$sourcehost "/etc/init.d/postgresql start"
 #reenable failover
 rm /tmp/dont_fail_over
 ssh postgres@$sourcehost "rm /tmp/dont_fail_over"
+
