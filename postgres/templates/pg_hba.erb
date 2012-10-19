@@ -103,6 +103,11 @@ host all replication <%= @master_ip %>/32 trust
 
 host replication replication <%= @slave_ip %>/32 trust
 host replication replication <%= @master_ip %>/32 trust
+#need to add the VIPS as I am not controlling the source address.
+host replication replication <%= @pg_vip %>/32 trust
+host replication replication <%= @redis_vip %>/32 trust
+
+#
 
 host all postgres <%= @slave_ip %>/32 trust
 host all postgres <%= @master_ip %>/32 trust

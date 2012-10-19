@@ -106,6 +106,9 @@ $pg_db3 = NULL,
 $pg_db4 = NULL,
 $service_ensure = NULL,
 $service_name = NULL,
+$pg_vip = NULL,
+$redis_vip  NULL,
+
 ){
 Class['postgres::keys'] -> Class['postgres::config']
 
