@@ -25,7 +25,7 @@ $package_name = "postgresql-9.2",
 
 package { $package_name:                                  
 	ensure => installed,                                   
-	require => Package[ ["libpq-dev"],["libpq5"] ],  
+	require => Package[ ["libpq-dev"],["libpq5"], ["postgresql-contrib-9.2"] ],  
 }   
 
 package { [ ["libpq-dev"],["libpq5"] ]:
