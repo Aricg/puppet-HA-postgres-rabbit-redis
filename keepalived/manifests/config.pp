@@ -9,7 +9,7 @@
 # - the $priority is a number that defines who should be the master (higher is master)
 # - the $postgres_vip is the ipaddress that will failover ensuring a connection to the postgres master
 # - the $redis_vip   is the ipaddress that will failover ensuring a connection to the redis master
-# - the $state is the intial state keepalived tries to start as (MASTER or BACKUP)
+# - the $state is the intial state keepalived tries to start as (MASTER or BACKUP) Should both be set to backup. as if the master reboots, keepalived is brought up in master mode, and steals the VIP that it should not have.
 # - the $prempt decides if a failed over machine should return to its original position if the original master returns. (generally we dont want this)
 # - the $master_ip is the ipaddress of the original master machine
 # - the $slave_of_ip this is the ip of the opposite machine so that if redis decides it should be a slave it can correctly guess the master ip. 
@@ -28,7 +28,7 @@
 #                priority => '150',
 #                postgres_vip => $pg_vip,
 #                redis_vip  => $redis_vip,
-#                state => 'MASTER',
+#                state => 'BACKUP',
 #                prempt => 'nopreempt',
 #                master_ip => $default_master_ip,
 #                slave_of_ip => $default_slave_ip,
@@ -41,7 +41,7 @@ class keepalived::config(
 $priority = NULL,
 $postgres_vip = NULL,
 $redis_vip  = NULL,
-$state = NULL,
+$state = BACKUP,
 $prempt = NULL,
 $master_ip = NULL,
 $slave_of_ip = NULL,
