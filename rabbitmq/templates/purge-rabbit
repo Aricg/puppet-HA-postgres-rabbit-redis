@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#apt-get remove and apt-get remove purge dont delete the .erlang cookie or the node hostname stuff in /var/lib/rabbitmq which if you break in the beginning may casue your nodes to fail to communicate even once you fix the hostname resolution, this script will actually purge rabbit. I used it for testing puppet deloyment
+
+/etc/init.d/rabbitmq-server stop
+rm /var/lib/rabbitmq/.erlang.cookie
+rm -rf /var/lib/rabbitmq/mnesia/
+apt-get remove rabbitmq-server

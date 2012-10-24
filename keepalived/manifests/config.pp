@@ -25,7 +25,7 @@
 # ==Usage
 # Sample Usage (master):
 #class {"keepalived::config":
-#                priority => '150',
+#                priority => '150', (set to something 50 or so lower on the slave) 
 #                postgres_vip => $pg_vip,
 #                redis_vip  => $redis_vip,
 #                state => 'BACKUP',
