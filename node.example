@@ -13,6 +13,7 @@ include iptables::service
 ###RABBIT Class['rabbitmq::repo'] -> Class['rabbitmq::config'] -> Class['rabbitmq::service'] Class -> ['rabbitmq::limits'] -> Class['rabbitmq::database'] -> Class['rabbitmq::database::guest']
 
 include rabbitmq::repo
+include rabbitmq::install
 class { "rabbitmq::config":
         multiple_nodes => 'yes',
         port => 5672,

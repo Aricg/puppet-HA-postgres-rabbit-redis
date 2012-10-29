@@ -2,7 +2,7 @@
 # @filename : repo.pp
 ##############################################################
 #
-# Class: postgres::install
+# Class: postgres::repo
 #
 # This class installs the  postgres 9.2 server's repo
 #
