@@ -31,6 +31,6 @@ Class['postgres::config'] -> Class['postgres::service']
     ensure     => $ensure,
     enable     => $enable,
     hasstatus  => true,
-    hasrestart => true,
+    hasreload => true,
   }
 }
