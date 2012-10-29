@@ -38,25 +38,19 @@ class rabbitmq::config(
   $port = '5672',
   $secret = NULL,
   $service_ensure = 'running',
-  $pkg_ensure  = 'present',
   $multiple_nodes = NULL,
   $node1 = NULL,
   $node2 = NULL,
   $node_stage = NULL,
 
-) { Class['rabbitmq::repo'] -> Class['rabbitmq::config']
+) { Class['rabbitmq::repo'] -> Class['rabbitmq::install'] -> Class['rabbitmq::config']
  
-
-  package { 'rabbitmq-server':
-    ensure => $pkg_ensure,
-  }
 
 file { '/etc/rabbitmq':
     ensure  => directory,
     owner   => 'rabbitmq',
     group   => 'rabbitmq',
     mode    => '0644',
-    require => Package['rabbitmq-server'],
   }
 
 
@@ -71,7 +65,6 @@ file { '/etc/rabbitmq':
 			    group   => 'rabbitmq',
 			    mode    => '0644',
 			    notify  => Class['rabbitmq::service'],
-    			    require => Package['rabbitmq-server'],
 			  }
 
 				    }
@@ -85,7 +78,6 @@ file { '/etc/rabbitmq':
 			    group   => 'rabbitmq',
 			    mode    => '0644',
 			    notify  => Class['rabbitmq::service'],
-    			    require => Package['rabbitmq-server'],
 			  }
 				    }
 
@@ -100,7 +92,6 @@ file { 'enabled_plugins':
     group   => 'rabbitmq',
     mode    => '0644',
     notify  => Class['rabbitmq::service'],
-    require => Package['rabbitmq-server'],
   }
 
 file { 'rabbitmq-env.config':
@@ -111,7 +102,6 @@ file { 'rabbitmq-env.config':
     group   => 'rabbitmq',
     mode    => '0644',
     notify  => Class['rabbitmq::service'],
-    require => Package['rabbitmq-server'],
   }
 
 }
