@@ -91,7 +91,6 @@ file { 'enabled_plugins':
     owner   => 'rabbitmq',
     group   => 'rabbitmq',
     mode    => '0644',
-    notify  => Class['rabbitmq::service'],
   }
 
 file { 'rabbitmq-env.config':
@@ -101,7 +100,6 @@ file { 'rabbitmq-env.config':
     owner   => 'rabbitmq',
     group   => 'rabbitmq',
     mode    => '0644',
-    notify  => Class['rabbitmq::service'],
   }
 
 }
