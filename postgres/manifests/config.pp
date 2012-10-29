@@ -105,7 +105,7 @@ $pg_db2 = NULL,
 $pg_db3 = NULL,
 $pg_db4 = NULL,
 $service_ensure = NULL,
-$service_name = NULL,
+$service_name = "postgresql",
 $pg_vip = NULL,
 $redis_vip = NULL,
 
