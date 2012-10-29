@@ -57,7 +57,9 @@ file { '/etc/rabbitmq':
     owner   => 'rabbitmq',
     group   => 'rabbitmq',
     mode    => '0644',
+    require => Package['rabbitmq-server'],
   }
+
 
     case $multiple_nodes {
         yes: {
@@ -70,6 +72,7 @@ file { '/etc/rabbitmq':
 			    group   => 'rabbitmq',
 			    mode    => '0644',
 			    notify  => Class['rabbitmq::service'],
+    			    require => Package['rabbitmq-server'],
 			  }
 
 				    }
@@ -83,6 +86,7 @@ file { '/etc/rabbitmq':
 			    group   => 'rabbitmq',
 			    mode    => '0644',
 			    notify  => Class['rabbitmq::service'],
+    			    require => Package['rabbitmq-server'],
 			  }
 				    }
 
@@ -97,6 +101,7 @@ file { 'enabled_plugins':
     group   => 'rabbitmq',
     mode    => '0644',
     notify  => Class['rabbitmq::service'],
+    require => Package['rabbitmq-server'],
   }
 
 file { 'rabbitmq-env.config':
@@ -107,6 +112,7 @@ file { 'rabbitmq-env.config':
     group   => 'rabbitmq',
     mode    => '0644',
     notify  => Class['rabbitmq::service'],
+    require => Package['rabbitmq-server'],
   }
 
 }

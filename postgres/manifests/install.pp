@@ -28,7 +28,7 @@ package { $package_name:
 	require => Package[ ["libpq-dev"],["libpq5"], ["postgresql-contrib-9.2"] ],  
 }   
 
-package { [ ["libpq-dev"],["libpq5"] ]:
+package { [ ["libpq-dev"],["libpq5"], ["postgresql-contrib-9.2"] ]:
         ensure => installed,
         require => file['/etc/apt/sources.list.d/postgres.list'],
 }
