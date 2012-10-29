@@ -110,7 +110,7 @@ include postgres::master
 include postgres::user
 
 realize(        Postgres::User::Postgres_user["replication"],
-                Postgres::User::Postgres_user["bescommp"], )
+                Postgres::User::Postgres_user["application"], )
 
 include postgres::database
 

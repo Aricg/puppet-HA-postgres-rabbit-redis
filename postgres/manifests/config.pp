@@ -84,7 +84,6 @@
 # $pg_db2 = "shopping"
 # $pg_db3 = "cars"
 # $pg_db4 = "boats"
-
 ##
 class postgres::config(
 $data_dir = NULL,
@@ -108,7 +107,6 @@ $service_ensure = NULL,
 $service_name = "postgresql",
 $pg_vip = NULL,
 $redis_vip = NULL,
-
 ){
 Class['postgres::keys'] -> Class['postgres::config']
 
