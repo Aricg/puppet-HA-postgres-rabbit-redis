@@ -69,6 +69,8 @@ class {"postgres::config":
         pg_db3 => $pg_db3,
         pg_db4 => $pg_db4,
         test_server1 => $pg_test_server1,
+        pg_vip => $pg_vip,
+        redis_vip => $redis_vip,
 }
 
 class {"postgres::service":
