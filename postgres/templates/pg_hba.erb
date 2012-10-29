@@ -92,6 +92,7 @@ local   all             all                                     peer
 host    all             all             127.0.0.1/32            md5
 # IPv6 local connections:
 host    all             all             ::1/128                 md5
+
 # Allow <%= $pg_repluser %> connections from localhost, by a user with the
 # <%= $pg_repluser %> privilege.
 #local   <%= $pg_repluser %>     postgres                                peer
@@ -100,23 +101,15 @@ host    all             all             ::1/128                 md5
 
 host all <%= $pg_repluser %> <%= @slave_ip %>/32 trust
 host all <%= $pg_repluser %> <%= @master_ip %>/32 trust
-
 host <%= $pg_repluser %> <%= $pg_repluser %> <%= @slave_ip %>/32 trust
 host <%= $pg_repluser %> <%= $pg_repluser %> <%= @master_ip %>/32 trust
 #need to add the VIPS as I am not controlling the source address.
 host <%= $pg_repluser %> <%= $pg_repluser %> <%= @pg_vip %>/32 trust
 host <%= $pg_repluser %> <%= $pg_repluser %> <%= @redis_vip %>/32 trust
-
-#
-
 host all postgres <%= @slave_ip %>/32 trust
 host all postgres <%= @master_ip %>/32 trust
-
 host all <%= $pg_user %> <%= @app_server1 %>/32 md5
 host all <%= $pg_user %> <%= @app_server2 %>/32 md5
-
-
-host all <%= $pg_user %> 10.2.100.35/32 md5
 
 
 
