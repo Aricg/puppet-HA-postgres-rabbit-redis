@@ -31,7 +31,7 @@ $pg_db2 = $postgres::config::pg_db2,
 $pg_db3 = $postgres::config::pg_db3,
 $pg_db4 = $postgres::config::pg_db4,
 )inherits postgres::config
-{ Class ['postgres::master'] -> Class ['postgres::user']
+{ Class ['postgres::master'] -> Class ['postgres::user'] -> Class ['postgres::database']
             
 
 		define postgres_database( $name, $owner, $pg_db_name )

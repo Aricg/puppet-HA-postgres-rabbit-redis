@@ -49,7 +49,6 @@ class rabbitmq::config(
 
   package { 'rabbitmq-server':
     ensure => $pkg_ensure,
-    notify => Class['rabbitmq::service'],
   }
 
 file { '/etc/rabbitmq':
