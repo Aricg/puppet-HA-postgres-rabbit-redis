@@ -45,6 +45,7 @@ include redis::config
 include redis::limits
 include redis::scripts
 
+include postgres::repo
 include postgres::install
 include postgres::keys
 class {"postgres::config":
