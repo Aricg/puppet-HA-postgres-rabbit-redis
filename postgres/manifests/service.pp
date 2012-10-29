@@ -31,6 +31,7 @@ Class['postgres::config'] -> Class['postgres::service']
     ensure     => $ensure,
     enable     => $enable,
     hasstatus  => true,
-    hasreload => true,
+    hasrestart => true,
+    restart => '/etc/init.d/postgresql reload',
   }
 }

@@ -21,9 +21,9 @@
 # "hostssl" is an SSL-encrypted TCP/IP socket, and "hostnossl" is a
 # plain TCP/IP socket.
 #
-# DATABASE can be "all", "sameuser", "samerole", "<%= $pg_repluser %>", a
+# DATABASE can be "all", "sameuser", "samerole", "<%= @pg_repluser %>", a
 # database name, or a comma-separated list thereof. The "all"
-# keyword does not match "<%= $pg_repluser %>". Access to <%= $pg_repluser %>
+# keyword does not match "<%= @pg_repluser %>". Access to <%= @pg_repluser %>
 # must be enabled in a separate record (see example below).
 #
 # USER can be "all", a user name, a group name prefixed with "+", or a
@@ -55,7 +55,7 @@
 #
 # Database and user names containing spaces, commas, quotes and other
 # special characters must be quoted.  Quoting one of the keywords
-# "all", "sameuser", "samerole" or "<%= $pg_repluser %>" makes the name lose
+# "all", "sameuser", "samerole" or "<%= @pg_repluser %>" makes the name lose
 # its special character, and just match a database or username with
 # that name.
 #
@@ -79,7 +79,7 @@
 # If you change this first entry you will need to make sure that the
 # database superuser can access the database using some other method.
 # Noninteractive access to all databases is required during automatic
-# maintenance (custom daily cronjobs, <%= $pg_repluser %>, and similar tasks).
+# maintenance (custom daily cronjobs, <%= @pg_repluser %>, and similar tasks).
 #
 # Database administrative login by Unix domain socket
 local   all             postgres                                peer
@@ -93,23 +93,23 @@ host    all             all             127.0.0.1/32            md5
 # IPv6 local connections:
 host    all             all             ::1/128                 md5
 
-# Allow <%= $pg_repluser %> connections from localhost, by a user with the
-# <%= $pg_repluser %> privilege.
-#local   <%= $pg_repluser %>     postgres                                peer
-#host    <%= $pg_repluser %>     postgres        127.0.0.1/32            md5
-#host    <%= $pg_repluser %>     postgres        ::1/128                 md5
+# Allow <%= @pg_repluser %> connections from localhost, by a user with the
+# <%= @pg_repluser %> privilege.
+#local   <%= @pg_repluser %>     postgres                                peer
+#host    <%= @pg_repluser %>     postgres        127.0.0.1/32            md5
+#host    <%= @pg_repluser %>     postgres        ::1/128                 md5
 
-host all <%= $pg_repluser %> <%= @slave_ip %>/32 trust
-host all <%= $pg_repluser %> <%= @master_ip %>/32 trust
-host <%= $pg_repluser %> <%= $pg_repluser %> <%= @slave_ip %>/32 trust
-host <%= $pg_repluser %> <%= $pg_repluser %> <%= @master_ip %>/32 trust
+host all <%= @pg_repluser %> <%= @slave_ip %>/32 trust
+host all <%= @pg_repluser %> <%= @master_ip %>/32 trust
+host <%= @pg_repluser %> <%= @pg_repluser %> <%= @slave_ip %>/32 trust
+host <%= @pg_repluser %> <%= @pg_repluser %> <%= @master_ip %>/32 trust
 #need to add the VIPS as I am not controlling the source address.
-host <%= $pg_repluser %> <%= $pg_repluser %> <%= @pg_vip %>/32 trust
-host <%= $pg_repluser %> <%= $pg_repluser %> <%= @redis_vip %>/32 trust
+host <%= @pg_repluser %> <%= @pg_repluser %> <%= @pg_vip %>/32 trust
+host <%= @pg_repluser %> <%= @pg_repluser %> <%= @redis_vip %>/32 trust
 host all postgres <%= @slave_ip %>/32 trust
 host all postgres <%= @master_ip %>/32 trust
-host all <%= $pg_user %> <%= @app_server1 %>/32 md5
-host all <%= $pg_user %> <%= @app_server2 %>/32 md5
+host all <%= @pg_user %> <%= @app_server1 %>/32 md5
+host all <%= @pg_user %> <%= @app_server2 %>/32 md5
 
 
 

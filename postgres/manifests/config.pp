@@ -150,7 +150,6 @@ file { 'postgresql.conf':
     owner   => 'postgres',
     group   => 'postgres',
     mode    => '0644',
-    notify => Service[$service_name],
   }
 
 file { 'pg_hba.conf':
