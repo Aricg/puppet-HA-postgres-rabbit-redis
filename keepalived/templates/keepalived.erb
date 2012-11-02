@@ -16,7 +16,7 @@ vrrp_instance VI_16_PGSQL {
        <%= @prempt %>
        advert_int 2
 virtual_ipaddress {
-       <%= @postgres_vip %>/<%= @CIDR %> brd <%= @broad_cast %> dev <%= @interface %>
+       <%= @postgres_vip %>/<%= @cidr %> brd <%= @broad_cast %> dev <%= @interface %>
 }
 track_script {
        chk_postgres
@@ -38,7 +38,7 @@ vrrp_instance VI_15_REDIS {
     <%= @prempt %>
     advert_int 2
     virtual_ipaddress {
-		<%= @redis_vip %>/<%= @CIDR %> brd <%= @broad_cast %> dev <%= @interface %>
+		<%= @redis_vip %>/<%= @cidr %> brd <%= @broad_cast %> dev <%= @interface %>
     }
     track_script {
         chk_redis

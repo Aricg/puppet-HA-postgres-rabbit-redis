@@ -49,7 +49,7 @@ $slave_of_ip = NULL,
 $slave_ip = NULL,
 $interface = NULL,
 $broad_cast = NULL,
-$CIDR = NULL,
+$cidr = NULL,
 
 
 ) { Class['keepalived::scripts'] -> Class['keepalived::config'] 
