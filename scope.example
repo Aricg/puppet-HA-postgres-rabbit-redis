@@ -25,6 +25,10 @@ $pg_data_dir = "/var/lib/postgresql/9.2/main/"
 $pg_conf_dir = "/etc/postgresql/9.2/main/"
 $pg_archive_dir = "/var/lib/postgresql/9.2/archive/"
 $service_ensure = 'running'
+$broad_cast = '192.168.1.255 '
+$CIDR = '24'
+$interface = 'eth0'
+
 
 
 

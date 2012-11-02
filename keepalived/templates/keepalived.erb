@@ -10,13 +10,13 @@ vrrp_script chk_postgres {
 !Postgres VIP
 vrrp_instance VI_16_PGSQL {
        state <%= @state %>
-       interface eth1
+       interface <%= @interface %>
        virtual_router_id 16
        priority <%= @priority %>
        <%= @prempt %>
        advert_int 2
 virtual_ipaddress {
-       <%= @postgres_vip %>/22 brd 10.2.103.254 dev eth1
+       <%= @postgres_vip %>/<%= @CIDR %> brd <%= @broad_cast %> dev <%= @interface %>
 }
 track_script {
        chk_postgres
@@ -32,13 +32,13 @@ vrrp_script chk_redis {
 !REDIS VIP
 vrrp_instance VI_15_REDIS {
     state <%= @state %>
-    interface eth1
+    interface <%= @interface %>
     virtual_router_id 26
     priority <%= @priority %>
     <%= @prempt %>
     advert_int 2
     virtual_ipaddress {
-		<%= @redis_vip %>/22 brd 10.2.103.254 dev eth1
+		<%= @redis_vip %>/<%= @CIDR %> brd <%= @broad_cast %> dev <%= @interface %>
     }
     track_script {
         chk_redis

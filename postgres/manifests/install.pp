@@ -19,7 +19,7 @@
 # include postgres::install
 	class postgres::install(
 $package_name = "postgresql-9.2",
-){ Class ['postgres::repo'] -> Class['postgres::install'] 
+){ Class ['Postgres::Repo'] -> Class['postgres::install'] 
 
 
 package { $package_name:                                  
@@ -29,7 +29,7 @@ package { $package_name:
 
 package { [ ["libpq-dev"],["libpq5"], ["postgresql-contrib-9.2"] ]:
         ensure => installed,
-        require => file['/etc/apt/sources.list.d/postgres.list'],
+        require => File['/etc/apt/sources.list.d/postgres.list'],
 }
 
 

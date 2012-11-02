@@ -98,6 +98,11 @@ class {"keepalived::config":
                 master_ip => $default_master_ip,
                 slave_of_ip => $default_slave_ip,
                 slave_ip => $default_slave_ip,
+                broad_cast => $broad_cast,
+                CIDR => $CIDR,
+                interface => $interface,
+
+
 }
 
 
@@ -136,6 +141,10 @@ class {"keepalived::config":
         slave_of_ip => $default_master_ip,
         state => 'BACKUP',
         prempt => 'nopreempt',
+	broad_cast => $broad_cast,
+	CIDR => $CIDR,
+	interface => $interface,
+
 }
 
 #TODO I had to hardcode $default_master_ip as I coulnt not get it to evaluate inside the ''s

@@ -14,9 +14,10 @@
 # - the $master_ip is the ipaddress of the original master machine
 # - the $slave_of_ip this is the ip of the opposite machine so that if redis decides it should be a slave it can correctly guess the master ip. 
 # - the $slave_ip = N is the ipaddress of the original slave machin,
-#
-#
-# None
+# - the $interface, eth0 is a sane default
+# - the $broad_cast, it's probably your gateway with a 255 at the end, but stranger things have happend
+# - the $CIDR, keep this to whatever the netmask on your network already is
+#None
 #
 # ==Actions
 # - Ensures that the main config file and custom postgres health check for keepalived are present
@@ -46,6 +47,9 @@ $prempt = NULL,
 $master_ip = NULL,
 $slave_of_ip = NULL,
 $slave_ip = NULL,
+$interface = NULL,
+$broad_cast = NULL,
+$CIDR = NULL,
 
 
 ) { Class['keepalived::scripts'] -> Class['keepalived::config'] 

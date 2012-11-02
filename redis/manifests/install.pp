@@ -31,7 +31,7 @@ class redis::install(
   package { $package_name:
     ensure => installed,
     notify => Class['redis::service'],
-    require => file['/etc/apt/sources.list.d/dotdeb.list'],
+    require => File['/etc/apt/sources.list.d/dotdeb.list'],
   }
 
 package { [ ["dialog"],["rcconf"] ]:
