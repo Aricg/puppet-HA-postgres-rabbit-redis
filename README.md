@@ -1,26 +1,26 @@
 Puppet Modules for an HA environment 
 ====================================
-Services include Postgres 9.2, rabbitmq-server 2.8.7, redis-server 2.4.16. Keepalived provieds VIP's for HA. It's all coupled together and needs to be refined. Also I'm not running unit tests as I go, so YMMV. I'll be updating this as I find problems in testing. 
+Services include Postgres with replication, rabbitmq-server with disk nodes and mirrioring redis-server with replication and Keepalived provieds VIP's and failover. It's all coupled together and it still being refined.
+Its running quite nicely in my lab right now (kvm machines) but puppet still needs to be run 2x on each node, so that the pubkeys can be shared between postgres accounts (passwordless ssh for replication rsync's)
 
-This collection of modules was meant for a very specific and I'll admit rushed project, and is thus rather inflexible, there are a handful of hardcoded problems that I'll work on in the next iteration. (as I learn puppet better)
-For example, if you only have on rabbit node, you need to set multiple nodes to false, and I run some ugly logic to create the config file thereafter. 
+Im learning puppet everyday so I have amny improvments to add to these modules. For example, if you only have on rabbit node, you need to set multiple nodes to false, and then I run some ugly logic to create the config file thereafter. 
+(there is a better way!)
 
 Installation
 ------------
 see: top scope and node examples
 
-TODO: Puppet must be run on both nodes more than once, as It generates and then exports @postgres's public keys pupulating authorized_keys between machines using a custom fact. I need this to run passwordless rsync and ssh between the machines when creating the master -> slave setup.
+Manual steps:Once the dust has settled and running puppet no longer changes anything, you need to restart postgres by hand (I don't like puppet restarting databases on config refreshes) And then as the postgres user on the defaul_slave you can run /var/lib/postgresql/9.2/slave_spawn_from_master.bash $IP_OF_MASTER Which will do what one would expect and spawn a slave from the master. 
 
-Once the dust has settled and the services are running as the postgres user on the defaul_slave you can run /var/lib/postgresql/9.2/slave_spawn_from_master.bash $IP_OF_MASTER Which will do what one would expect and spawn a slave from the master. 
+Rabbit: Sometimes rabbit seems to fail to start the fisrt run, kill all its PID's and start it by hand (rabbit-server) after that the init file will work as expected
 
 I have also included rough Per-module Documentation
 
 License
 ------
-GPL or something, I guess, I will certainly not come after anyone.
+GPL or something, I guess? Go nuts. 
 
 Support
 -------
 None provided, really this is for my own reference, and If you want to look at it you might get some ideas (possible bad ones) But hey, you never know. 
 
-Testing commit access from this comupter
