@@ -50,15 +50,12 @@ $slave_ip = NULL,
 $interface = NULL,
 $broad_cast = NULL,
 $cidr = NULL,
-
-
 ) { Class['keepalived::scripts'] -> Class['keepalived::config'] 
 
   package { 'keepalived':
     ensure => installed,
     notify => Class['keepalived::service'],
   }
-
 
 file { 'keepalived.config':
     ensure  => file,
@@ -80,7 +77,4 @@ file { 'check_postgres':
     mode    => '0744',
     require => Package['keepalived'],
   }
-
-
-
 } 
