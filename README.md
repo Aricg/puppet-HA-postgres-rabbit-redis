@@ -22,3 +22,5 @@ GPL or something, I guess, I will certainly not come after anyone.
 Support
 -------
 None provided, really this is for my own reference, and If you want to look at it you might get some ideas (possible bad ones) But hey, you never know. 
+
+Testing commit access from this comupter
