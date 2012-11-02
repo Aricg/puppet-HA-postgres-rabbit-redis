@@ -40,9 +40,12 @@ class postgres::keys()
         }   
 
         #Chicken and Egg problem.                                                                 
+
         File <<| tag == "pubkey" |>>
+
+#DEFINE AND REALIZE
         @@file {
-            "/var/lib/postgresql/.ssh/authorizedkeys.d/key-${fqdn}":      content => $pgsshpubkey, #this is a custom fact, it cannot return untill postgres keys are generated 
+            "/var/lib/postgresql/.ssh/authorizedkeys.d/key-${hostname}":      content => $pgsshpubkey, #this is a custom fact, it cannot return untill postgres keys are generated 
                                                                         tag => "pubkey",
                                                                         require => File["/var/lib/postgresql/.ssh/authorizedkeys.d"],
 									subscribe => Exec["Create ssh keys for postgres user"],
@@ -70,7 +73,7 @@ class postgres::keys()
             exec { "cat together the auth_keys file":
                 command => "rm /var/lib/postgresql/.ssh/authorized_keys;
 /bin/cat /var/lib/postgresql/.ssh/authorizedkeys.d/* > /var/lib/postgresql/.ssh/authorized_keys;",
-		subscribe => File["/var/lib/postgresql/.ssh/authorizedkeys.d/key-${fqdn}"],
+		subscribe => File["/var/lib/postgresql/.ssh/authorizedkeys.d/key-${hostname}"],
 #               onlyif => "ls /var/lib/postgresql/.ssh/authorizedkeys.d/* | grep -c key",
 #               require => Exec ["Create ssh keys for postgres user"], #File["/var/lib/postgresql/.ssh/authorizedkeys.d/key-$fqdn"],
             }

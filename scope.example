@@ -1,5 +1,20 @@
 Define these in your top scope. Details can be found in the per-file documentation
 
+
+        #Chicken and Egg problem.                                                                 
+        File <<| tag == "privateip" |>>
+        File <<| tag == "master" |>>
+        File <<| tag == "slave" |>>
+
+        @@file {
+            "/tmp/$ipaddress_eth0":
+                content => $ipaddress_eth0,
+                tag => "privateip",
+
+        }
+
+
+
 $default_master_ip = '10.x.x.x'
 $default_slave_ip = '10.x.x.x.'
 $pg_app_server1 = '10.x.x.x'  #application servers you want to grant access in pg_hba.conf
