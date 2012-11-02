@@ -99,7 +99,7 @@ class {"keepalived::config":
                 slave_of_ip => $default_slave_ip,
                 slave_ip => $default_slave_ip,
                 broad_cast => $broad_cast,
-                CIDR => $CIDR,
+                cidr => $cidr,
                 interface => $interface,
 
 
@@ -142,7 +142,7 @@ class {"keepalived::config":
         state => 'BACKUP',
         prempt => 'nopreempt',
 	broad_cast => $broad_cast,
-	CIDR => $CIDR,
+	cidr => $cidr,
 	interface => $interface,
 
 }
