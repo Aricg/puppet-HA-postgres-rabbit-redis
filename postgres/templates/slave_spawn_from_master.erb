@@ -24,8 +24,8 @@ archivedirdest=/var/lib/postgresql/9.2/archive
 	fi
 	    
 
-CheckIfPostgresIsRunningOnRemoteHost () {
-isrunning=$(ssh postgres@$1 'if 'killall -0 postgres'; then echo "postgres_running"; else echo "postgress_not_running"; fi;')
+
+isrunning="$(ssh postgres@"$1" 'if killall -0 postgres; then echo "postgres_running"; else echo "postgress_not_running"; fi;')"
 
 if [[ "$isrunning" = "postgress_not_running" ]]
 then
@@ -41,13 +41,12 @@ then
 fi
 }
 
-
 CheckIfMasterIsActuallyAMaster () {
-ismaster=$(ssh postgres@$1 'if [ -f /var/lib/postgresql/9.2/main/recovery.conf ]; then echo "postgres_is_not_master"; else echo "postgres_is_a_master_instance"; fi;')
+ismaster="$(ssh postgres@"$1" 'if [ -f /var/lib/postgresql/9.2/main/recovery.done ]; then echo "postgres_is_not_master"; else echo "postgres_is_a_master_instance"; fi;')"
 
 if [[ "$ismaster" = "postgres_is_not_master" ]]
-then
-        echo "postgres is already running as a slave, exiting";
+then 
+        echo "postgres is already running as a slave, exiting"; 
         exit 1
 
 elif [[ "$ismaster" = "postgres_is_a_master_instance" ]]
@@ -59,6 +58,10 @@ then
 
 fi
 }
+CheckIfMasterIsActuallyAMaster "$1"
+
+echo "executing rest of script"
+
 
 
 #Keepalived will trigger failover when it detects postgres stopping on the master node. -- this disables failover (/usr/sbin/check_postgres source:puppet:/keepalived/templates/check_postgres.erb) is a requirement
