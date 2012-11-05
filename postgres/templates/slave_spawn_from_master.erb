@@ -25,7 +25,7 @@ archivedirdest=/var/lib/postgresql/9.2/archive
 	    
 
 CheckIfPostgresIsRunningOnRemoteHost () {
-isrunning=$(ssh postgres@192.168.6.170 'if 'killall -0 postgres'; then echo "postgres_running"; else echo "postgress_not_running"; fi;')
+isrunning=$(ssh postgres@$1 'if 'killall -0 postgres'; then echo "postgres_running"; else echo "postgress_not_running"; fi;')
 
 if [[ "$isrunning" = "postgress_not_running" ]]
 then
@@ -43,7 +43,7 @@ fi
 
 
 CheckIfMasterIsActuallyAMaster () {
-ismaster=$(ssh postgres@192.168.6.170 'if [ -f /var/lib/postgresql/9.2/main/recovery.conf ]; then echo "postgres_is_not_master"; else echo "postgres_is_a_master_instance"; fi;')
+ismaster=$(ssh postgres@$1 'if [ -f /var/lib/postgresql/9.2/main/recovery.conf ]; then echo "postgres_is_not_master"; else echo "postgres_is_a_master_instance"; fi;')
 
 if [[ "$ismaster" = "postgres_is_not_master" ]]
 then
