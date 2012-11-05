@@ -1,4 +1,4 @@
-
+#Managed by puppet, do not edit
 # This is the ssh client system-wide configuration file.  See
 # ssh_config(5) for more information.  This file provides defaults for
 # users, and the values can be changed in per-user configuration files

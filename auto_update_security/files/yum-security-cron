@@ -1,2 +1,3 @@
 #!/bin/bash
+#Managed by puppet, do not edit
 yum update --security -y -d0 -q

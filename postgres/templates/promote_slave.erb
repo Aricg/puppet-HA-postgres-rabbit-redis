@@ -1,5 +1,6 @@
 #!/bin/bash
+#Script that promotes the target machine "$1" to master
+##Managed by puppet, do not edit
 slave=$1
-
 ssh  postgres@$slave "touch /tmp/trigger_file"
 

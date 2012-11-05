@@ -1,7 +1,10 @@
+#Managed by puppet, do not edit
+#
 # If "recovery.conf" is present in the PostgreSQL data directory, it is
 # read on postmaster startup.  After successful recovery, it is renamed
 # to "recovery.done" to ensure that we do not accidentally re-enter
 # archive recovery or standby mode.
+#
 standby_mode = 'on'
 primary_conninfo = 'host=<%= @master_ip %> port=5432 user=<%= @repluser %> password=<%= @replpass %>'
 trigger_file = '/tmp/trigger_file'
