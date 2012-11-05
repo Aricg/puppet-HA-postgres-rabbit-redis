@@ -127,8 +127,8 @@ ssh postgres@$sourcehost "rm /tmp/dont_fail_over"
 
 #Execute above operations
 
-CheckIfPostgresIsRunningOnRemoteHost
-CheckIfMasterIsActuallyAMaster
+CheckIfPostgresIsRunningOnRemoteHost $1
+CheckIfMasterIsActuallyAMaster $1
 DontFailOverDuringThisOperation
 PrepareLocalServer
 CheckForRecoveryConfig
