@@ -24,7 +24,7 @@ archivedirdest=/var/lib/postgresql/9.2/archive
 	fi
 	    
 
-
+CheckIfPostgresIsRunningOnRemoteHost () {
 isrunning="$(ssh postgres@"$1" 'if killall -0 postgres; then echo "postgres_running"; else echo "postgress_not_running"; fi;')"
 
 if [[ "$isrunning" = "postgress_not_running" ]]
@@ -58,7 +58,6 @@ then
 
 fi
 }
-CheckIfMasterIsActuallyAMaster "$1"
 
 echo "executing rest of script"
 

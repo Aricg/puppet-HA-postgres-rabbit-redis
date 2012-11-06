@@ -1,4 +1,5 @@
-#Define these in your top scope. Details can be found in the per-file documentation
+Define these in your default "node shared" (see node.example)
+Further Details can be found in the per-file documentation
 
 
 #For this file to be created and then shared the postgres module must have finished installing.
