@@ -10,7 +10,7 @@ include auto_update_security
 include iptables::install
 include iptables::service
 
-###RABBIT Class['rabbitmq::repo'] -> Class['rabbitmq::config'] -> Class['rabbitmq::service'] Class -> ['rabbitmq::limits'] -> Class['rabbitmq::database'] -> Class['rabbitmq::database::guest']
+#Order of operations for Rabbit: Class['rabbitmq::repo'] -> Class['rabbitmq::config'] -> Class['rabbitmq::service'] Class -> ['rabbitmq::limits'] -> Class['rabbitmq::database'] -> Class['rabbitmq::database::guest']
 
 include rabbitmq::repo
 include rabbitmq::install
@@ -32,13 +32,14 @@ class { "rabbitmq::database":
         rabbit_password => $rabbit_pass,
         rabbit_role => $rabbit_login,
 }
-#remove guest account
+
+#remove guest account it's insecure
 class { "rabbitmq::database::guest":
         ensure => absent,
         rabbit_username => 'guest',
 }
 
-##Redis { Class['redis::repo'] -> Class['redis::install'] -> Class['redis::config'] ->  Class['redis::limits'] -> Class['redis::scripts'] -> Class['redis::service']
+##Order of operations for Redis { Class['redis::repo'] -> Class['redis::install'] -> Class['redis::config'] ->  Class['redis::limits'] -> Class['redis::scripts'] -> Class['redis::service']
 
 include redis::repo
 include redis::install
@@ -74,18 +75,17 @@ class {"postgres::config":
 }
 
 class {"postgres::service":
-        ensure=> 'running', #Valid values are stopped, running.
-        enable=> 'true', #this doesnt seem to do anything
+        ensure=> 'running',
+        enable=> 'true',
 }
 
-#Keepalived Class['keepalived::scripts'] -> Class['keepalived::config(defined below)'] -> Class['keepalived::service']
-
+#Order of operations for Keepalived: Class['keepalived::scripts'] -> Class['keepalived::config'] -> Class['keepalived::service']
+#
 include keepalived::scripts
 include keepalived::service
 
-
-
 }
+
 
 node 'Default Master' inherits shared {
 
@@ -116,21 +116,24 @@ class { "redis::service":
 
 include postgres::master
 
-include postgres::user
+#Postgres::User::Postgres_user <| name == "$replication" |>
 
-realize(        Postgres::User::Postgres_user["replication"],
-                Postgres::User::Postgres_user["application"], )
+include postgres::user
+#you need to fill these in to whatever you defined in the top scope. Annying right?
+
+realize(        Postgres::User::Postgres_user[""],
+                Postgres::User::Postgres_user[""], )
 
 include postgres::database
 
-realize(        Postgres::Database::Postgres_database["besdb"],
-                Postgres::Database::Postgres_database["clientappauth"],
-                Postgres::Database::Postgres_database["lidi"],
-                Postgres::Database::Postgres_database["comments"], )
+realize(        Postgres::Database::Postgres_database[""],
+                Postgres::Database::Postgres_database[""],
+                Postgres::Database::Postgres_database[""],
+                Postgres::Database::Postgres_database[""], )
 }
 
 
-node 'Default Standby' inherits shared {
+node 'Default Slave' inherits shared {
 
 include postgres::slave
 
@@ -147,11 +150,10 @@ class {"keepalived::config":
 
 }
 
-#TODO I had to hardcode $default_master_ip as I coulnt not get it to evaluate inside the ''s
 class { "redis::service":
                 ensure          => 'running',
                 enable          => 'false',
-                start_redis     => '/etc/init.d/redis-server start-slave $default_master_ip  6379',
+                start_redis     => "/etc/init.d/redis-server start-slave $default_master_ip  6379",
 }
 
 

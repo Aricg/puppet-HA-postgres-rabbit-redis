@@ -3,9 +3,9 @@ Puppet Modules for an HA environment
 Services provisioned:
 
  
-	*Postgres - streaming replication 
-	*Rabbitmq-server - disk nodes and mirrioring 
-	*Redis-server with replication
+	*Postgres - Streaming replication 
+	*Rabbitmq-server - Disk nodes and mirrioring 
+	*Redis-server -  Streaming replication
 	*KeepAlived  - Provides VIP's and failover
 
 
@@ -13,7 +13,7 @@ Issues
 ------
 
 This setup is running quite nicely in my lab right now (KVM machines) However Puppet needs to be run ~ twice on each node, so that the pubkeys can be shared between postgres accounts (passwordless ssh for replication rsync's)
-Im still learning about puppet so I have amny improvments to add to these modules. For example, if you only have on rabbit node, you need to set multiple nodes to false, and then I run some ugly logic to create the config file thereafter. 
+Im still learning about puppet so I have still have improvments to add to these modules. For example, if you only have on rabbit node, you need to set multiple nodes to false, and then I run some ugly logic to create the config file thereafter. 
 (I know that there is a better way!)
 
 

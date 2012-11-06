@@ -1,48 +1,58 @@
-Define these in your top scope. Details can be found in the per-file documentation
+#Define these in your top scope. Details can be found in the per-file documentation
 
 
-        #Chicken and Egg problem.                                                                 
-        File <<| tag == "privateip" |>>
-        File <<| tag == "master" |>>
-        File <<| tag == "slave" |>>
-
-        @@file {
-            "/tmp/$ipaddress_eth0":
-                content => $ipaddress_eth0,
-                tag => "privateip",
-
-        }
+#For this file to be created and then shared the postgres module must have finished installing.
+	File <<| tag == "pubkey" |>>
 
 
+#Choose which machine will be setup as the Orginal Master and Slave (recovery.conf Vs recovery.done)
+	$default_master_ip = '10.x.x.x' 
+	$default_slave_ip = '10.x.x.x.'
 
-$default_master_ip = '10.x.x.x'
-$default_slave_ip = '10.x.x.x.'
-$pg_app_server1 = '10.x.x.x'  #application servers you want to grant access in pg_hba.conf
-$pg_app_server2 = '10.x.x.x'  #
-$pg_test_server1 = '10.X.X.X' #
-$pg_repluser = 'replication'
-$pg_replpass = 'XXXXXXXXXXX'
-$pg_pass = 'XXXXXXXXXXXXXXX'
-$pg_user = 'username'
-$pg_db1 = 'first_database' 
-$pg_db2 = 'second_database'
-$pg_db3 = 'third_database'
-$pg_db4 = 'fourth_database'
-$pg_vip = '10.x.x.x'      # VIP's as yet uncreated that will be maintined by keepalived
-$redis_vip  = '10.x.x.x'  #
-$rabbit_vip = '10.x.x.x'  #
-$rabbit_user = 'rabbit_username'
-$rabbit_pass = 'xxxxxxxxxxxx'
-$rabbit_login = 'rabbit_webui_username
-$rabbit_node1 = 'rabbit@foonet001'
-$rabbit_node2 = 'rabbit@foonet002'
+#application servers you want to grant access in pg_hba.conf
+	$pg_app_server1 = '10.x.x.x' 
+	$pg_app_server2 = '10.x.x.x'  #
+	$pg_test_server1 = '10.X.X.X' #
+
+#we must setup a replication account
+	$pg_repluser = 'replication'
+	$pg_replpass = 'XXXXXXXXXXX'
+
 $pg_data_dir = "/var/lib/postgresql/9.2/main/"
 $pg_conf_dir = "/etc/postgresql/9.2/main/"
 $pg_archive_dir = "/var/lib/postgresql/9.2/archive/"
+
+#Databases first through fourth will be owned by pg_user
+	$pg_user = 'username'
+	$pg_pass = 'XXXXXXXXXXXXXXX'
+		$pg_db1 = 'first_database' 
+		$pg_db2 = 'second_database'
+		$pg_db3 = 'third_database'
+		$pg_db4 = 'fourth_database'
+
+# VIP's that will be brought up by Keepalived
+	$pg_vip = '10.x.x.x'     
+	$redis_vip  = '10.x.x.x'  # 
+	$rabbit_vip = '10.x.x.x'  #
+
+	#Network settings for VIP's brought up by Keepalived	
+		$broad_cast = '10.x.x.255'
+		$cidr = '24'
+		$interface = 'eth0'
+
+# Username and Password for the provided rabbit web interface. Served on port 55672
+	$rabbit_user = 'rabbit_username'
+	$rabbit_pass = 'xxxxxxxxxxxx'
+	$rabbit_login = 'rabbit_webui_username
+	
+#Rabbit can only be setup with one or two nodes so far. Look at the code if you want to add more.
+	$rabbit_node1 = 'rabbit@foonet001'
+	$rabbit_node2 = 'rabbit@foonet002'
+
+
 $service_ensure = 'running'
-$broad_cast = '192.168.1.255 '
-$cidr = '24'
-$interface = 'eth0'
+
+
 
 
 
