@@ -3,7 +3,7 @@
 # to "recovery.done" to ensure that we do not accidentally re-enter
 # archive recovery or standby mode.
 standby_mode = 'on'
-primary_conninfo = 'host=<%= @slave_ip %> port=5432 user=<%= @repluser %> password=<%= @replpass %>'
+primary_conninfo = 'host=<%= @slave_ip %> port=5432 user=<%= @pg_repluser %> password=<%= @pg_replpass %>'
 trigger_file = '/tmp/trigger_file'
 restore_command = 'cp /var/lib/postgresql/9.2/archive/%f "%p"'
 archive_cleanup_command = '/usr/lib/postgresql/9.2/bin/pg_archivecleanup /var/lib/postgresql/9.2/archive/ %r'
