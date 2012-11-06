@@ -110,8 +110,8 @@ host <%= @pg_repluser %> <%= @pg_repluser %> <%= @pg_vip %>/32 trust
 host <%= @pg_repluser %> <%= @pg_repluser %> <%= @redis_vip %>/32 trust
 host all postgres <%= @slave_ip %>/32 trust
 host all postgres <%= @master_ip %>/32 trust
-host all <%= @pg_user %> <%= @app_server1 %>/32 md5
-host all <%= @pg_user %> <%= @app_server2 %>/32 md5
+host all <%= @pg_user %> <%= @pg_app_server1 %>/32 md5
+host all <%= @pg_user %> <%= @pg_app_server2 %>/32 md5
 
 
 
