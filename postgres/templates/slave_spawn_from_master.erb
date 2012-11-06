@@ -42,7 +42,7 @@ fi
 }
 
 CheckIfMasterIsActuallyAMaster () {
-ismaster="$(ssh postgres@"$1" 'if [ -f /var/lib/postgresql/9.2/main/recovery.done ]; then echo "postgres_is_not_master"; else echo "postgres_is_a_master_instance"; fi;')"
+ismaster="$(ssh postgres@"$1" 'if [ -f /var/lib/postgresql/9.2/main/recovery.done ]; then echo "postgres_is_a_master_instance"; else echo "postgres_is_not_master"; fi;')"
 
 if [[ "$ismaster" = "postgres_is_not_master" ]]
 then 
