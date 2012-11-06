@@ -59,17 +59,16 @@ class {"postgres::config":
         archive_dir => $pg_archive_dir,
         master_ip => $default_master_ip,
         slave_ip => $default_slave_ip,
-        app_server1 => $pg_app_server1,
-        app_server2 => $pg_app_server2,
-        repluser => $pg_repluser,
-        replpass => $pg_replpass,
+        pg_app_server1 => $pg_app_server1,
+        pg_app_server2 => $pg_app_server2,
+        pg_repluser => $pg_repluser,
+        pg_replpass => $pg_replpass,
         pg_user => $pg_user,
         pg_pass => $pg_pass,
         pg_db1 => $pg_db1,
         pg_db2 => $pg_db2,
         pg_db3 => $pg_db3,
         pg_db4 => $pg_db4,
-        test_server1 => $pg_test_server1,
         pg_vip => $pg_vip,
         redis_vip => $redis_vip,
 }
@@ -123,7 +122,7 @@ include postgres::user
 #
 #User <| title == luke |> 
 
-realize(        Postgres::User::Postgres_user <| name == "$db_owner" |> ,
+realize(        Postgres::User::Postgres_user <| name == "$pg_user" |> ,
                 Postgres::User::Postgres_user <| name == "$pg_repluser" |> , )
 
 include postgres::database

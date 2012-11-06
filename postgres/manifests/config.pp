@@ -33,57 +33,9 @@
 #
 # ==Usage
 # Sample Usage:
-# class {"postgres::config":
-#         $package_name => $pg_package_name,
-#         $service_name => $pg_service_name,
-#         $service_ensure => $pg_service_ensure,
-#         $data_dir => $pg_data_dir,
-#         $conf_dir => $pg_conf_dir,
-#         $archive_dir => $pg_archive_dir,
-#         $master_ip => $default_master_ip,
-#         $slave_ip => $default_slave_ip,
-#         $app_server1 => $pg_app_server1,
-#         $app_server2 => $pg_app_server2,
-#         $repluser => $pg_repluser,
-#         $replpass => $pg_replpass,
-#         $besuser => $pg_besuser,
-#         $bespass => $pg_bespass,
-#         $test_server1 => $pg_test_server1,
-#	  $pg_db1 = users,
-#	  $pg_db2 = shopping,
-#	  $pg_db3 = cars,
-#	  $pg_db4 = boats,
+# See node config
 #
 # }
-# I dont know how clear this is so. you need to create values higher up in the scope to match pg_package name and the ilk IE:
-# node postgrescluster_shared {
-# $pg_package_name = 'postgresql-9.2'
-# $pg_service_name = 'postgresql'
-# $pg_service_ensure = 'running'
-# $pg_data_dir = "/var/lib/postgresql/9.2/main/"
-# $pg_conf_dir = "/etc/postgresql/9.2/main/"
-# $pg_archive_dir = "/var/lib/postgresql/9.2/archive/"
-# $default_master_ip = '10.x.x.x'
-# $default_slave_ip = '10.x.x.x'
-# $pg_app_server1 = '10.x.x.x'
-# $pg_app_server2 = '10.x.x.x'
-# $pg_repluser = 'replication'
-# $pg_replpass = 'xxxxxxxxxx'
-# $pg_besuser = 'foo'
-# $pg_bespass = 'xxxxxxxxxxxx'
-# $pg_test_server1 = 'x.x.x.x'
-# $pg_vip = 'x.x.x.x'
-# $redis_vip  = 'x.x.x.x'
-# $rabbit_user = 'foouser'
-# $rabbit_pass = 'xxxxxxxx'
-# $rabbit_login = 'fooadmin'
-# $rabbit_stage = 'rabbit@foonetx
-# $rabbit_node1 = 'rabbit@foonetx'
-# $rabbit_node2 = 'rabbit@foonety'
-# $pg_db1 = "users"
-# $pg_db2 = "shopping"
-# $pg_db3 = "cars"
-# $pg_db4 = "boats"
 ##
 class postgres::config(
 $data_dir = NULL,
@@ -92,11 +44,10 @@ $conf_dir = NULL,
 $package_name = NULL,
 $master_ip = NULL,
 $slave_ip = NULL,
-$repluser = NULL,
-$replpass= NULL,
-$app_server1 = NULL,
-$app_server2 = NULL,
-$test_server1 = NULL,
+$pg_repluser = NULL,
+$pg_replpass= NULL,
+$pg_app_server1 = NULL,
+$pg_app_server2 = NULL,
 $pg_user = NULL,
 $pg_pass = NULL,
 $pg_db1 = NULL,
