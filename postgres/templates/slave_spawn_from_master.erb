@@ -76,12 +76,12 @@ ssh postgres@$sourcehost "touch /tmp/dont_fail_over"
 PrepareLocalServer () {
 rm /tmp/trigger_file
 bash /etc/init.d/postgresql stop
-mv <%= @data_dir %>/recovery.done <%= @data_dir %>/recovery.conf
+mv <%= @data_dir %>recovery.done <%= @data_dir %>recovery.conf
 }
 
 
 CheckForRecoveryConfig () {
-	if [ -e "<%= @data_dir %>/recovery.conf" ];
+	if [ -e "<%= @data_dir %>recovery.conf" ];
 	    then
 		echo "Slave Config File Found, Continuing"
 	    else
