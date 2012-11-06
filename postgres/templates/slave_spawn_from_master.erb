@@ -131,15 +131,15 @@ ssh postgres@$sourcehost "rm /tmp/dont_fail_over"
 
 CheckIfPostgresIsRunningOnRemoteHost $1
 CheckIfMasterIsActuallyAMaster $1
-DontFailOverDuringThisOperation
-PrepareLocalServer
-CheckForRecoveryConfig
-PutMasterIntoBackupMode
-RsyncWhileLive
-StopBackupModeAndArchiveIntoWallLog
-StopPostgreSqlAndFinishRsync
-StartLocalAndThenRemotePostGreSql
-ReenableFailover
+DontFailOverDuringThisOperation $1
+PrepareLocalServer $datadir
+CheckForRecoveryConfig $datadir
+PutMasterIntoBackupMode $1
+RsyncWhileLive $1
+StopBackupModeAndArchiveIntoWallLog $
+StopPostgreSqlAndFinishRsync $1
+StartLocalAndThenRemotePostGreSql $1
+ReenableFailover $1
 
 
 
