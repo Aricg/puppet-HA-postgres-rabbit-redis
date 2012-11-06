@@ -16,11 +16,11 @@
 # - the $archive_dir that postgres should save its wal archives to
 # - the $master_ip which machine will originally besetup as the master postgres server
 # - the $slave_ip  which machine will originally besetup as the slave (replicant) postgres server
-# - the $app_server1 first application server which is allowed to connect
-# - the $app_server2 second application server which is allowed to connect
-# - the $repluser is the replicants username, generally replication
-# - the $replpass is the replicant users password
-# - the $besuser is the master application user
+# - the $pg_app_server1 first application server which is allowed to connect
+# - the $pg_app_server2 second application server which is allowed to connect
+# - the $pg_repluser is the replicants username, generally replication
+# - the $pg_replpass is the replicant users password
+# - the $pg_suser is the master application user
 # - the $bespass the password for the master application user
 # - the $test_server1 is another server that is given limited access to the database, perhaps a developer desktop
 # - the $pg_db1-4 are databases that you can define, they will becreated for you. 
