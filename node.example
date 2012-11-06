@@ -120,16 +120,18 @@ include postgres::master
 
 include postgres::user
 #you need to fill these in to whatever you defined in the top scope. Annying right?
+#
+#User <| title == luke |> 
 
-realize(        Postgres::User::Postgres_user[""],
-                Postgres::User::Postgres_user[""], )
+realize(        Postgres::User::Postgres_user <| name == "$db_owner" |> ,
+                Postgres::User::Postgres_user <| name == "$pg_repluser" |> , )
 
 include postgres::database
 
-realize(        Postgres::Database::Postgres_database[""],
-                Postgres::Database::Postgres_database[""],
-                Postgres::Database::Postgres_database[""],
-                Postgres::Database::Postgres_database[""], )
+realize(        Postgres::Database::Postgres_database["$pg_db1"],
+                Postgres::Database::Postgres_database["$pg_db2"],
+                Postgres::Database::Postgres_database["$pg_db3"],
+                Postgres::Database::Postgres_database["$pg_db4"], )
 }
 
 
