@@ -114,16 +114,10 @@ class { "redis::service":
 
 
 include postgres::master
-
-#Postgres::User::Postgres_user <| name == "$replication" |>
-
 include postgres::user
-#you need to fill these in to whatever you defined in the top scope. Annying right?
-#
-#User <| title == luke |> 
 
-realize(        Postgres::User::Postgres_user <| name == "$pg_user" |> ,
-                Postgres::User::Postgres_user <| name == "$pg_repluser" |> , )
+realize(        Postgres::User::Postgres_user["$pg_user"],
+                Postgres::User::Postgres_user["$pg_repluser"], )
 
 include postgres::database
 
