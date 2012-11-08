@@ -23,6 +23,7 @@ class redis::service(
   $service_name = 'redis-server',
   $ensure=NULL,
   $enable=NULL,
+  $default_master_ip=NULL,
   $start_redis=NULL,
 ) { Class['redis::repo'] -> Class['redis::install'] -> Class['redis::config'] ->  Class['redis::limits'] -> Class['redis::scripts'] -> Class['redis::service']  
 

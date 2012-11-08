@@ -148,6 +148,7 @@ class {"keepalived::config":
 class { "redis::service":
                 ensure          => 'running',
                 enable          => 'false',
+		default_master_ip => $default_master_ip,
                 start_redis     => "/etc/init.d/redis-server start-slave $default_master_ip  6379",
 }
 
