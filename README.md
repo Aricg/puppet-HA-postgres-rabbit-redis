@@ -12,8 +12,8 @@ Services provisioned:
 Issues
 ------
 
-This setup is running quite nicely in my lab right now (KVM machines) However Puppet needs to be run ~ twice on each node, so that the pubkeys can be shared between postgres accounts (passwordless ssh for replication rsync's)
-Im still learning about puppet so I have still have improvments to add to these modules. For example, if you only have one rabbit node, you need to set multiple nodes to false, and then I run some ugly logic to create the config file thereafter. 
+This setup is running quite nicely in my lab right now (KVM machines) However Puppet needs to be run ~ twice on each node, once to generate ssh keys for the postgres user and again to shared id_rsa.pub into the other machines known_hosts req of (start replication rsync script)
+Im still improving these modules -- For example, if you only have one rabbit node, you need to set multiple nodes to false, and then I run some ugly logic to create the config file thereafter. 
 (I know that there is a better way!)
 
 
