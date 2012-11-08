@@ -24,8 +24,8 @@ I have also included Per-module Documentation
 
 Starting Replication
 --------------------
-Once the dust has settled and running puppet no longer changes anything, you need to restart postgres on the desired master node by hand. (I don't like puppet restarting databases on config refreshes) This will prompt the master to generate the correct type of log file for streaming replication.
-Second as the postgres user on the defaul_slave you run /var/lib/postgresql/9.2/slave_spawn_from_master.bash $IP_OF_MASTER Which will do what one would expect and spawn a slave from the master. 
+	*Restart postgres on the desired master. (I don't like puppet calling restarting postgres on config changes) This will prompt the master to generate the correct type of log file for streaming replication.
+	*su to the postgres user on the defaul_slave machine and run /var/lib/postgresql/9.2/slave_spawn_from_master.bash $IP_OF_MASTER 
 
 RabbitMQ
 -------- 
