@@ -42,7 +42,7 @@ Iptables is only meant to be used if you have two interfaces (one internal and o
 Security
 --------
 In my environment all of these machines are isolated by iptables blocking any connections through the public interface.
-If you do not have the luxury of a trusted private network please do not run this in any serious manner without fisrt adressing how you are going to secure these services.
+If you do not have the luxury of a trusted private network please do not run this in any serious manner without first adressing how you are going to secure these services.
 
 License
 ------
