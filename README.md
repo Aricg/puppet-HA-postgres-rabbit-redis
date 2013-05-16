@@ -33,7 +33,7 @@ Rabbit fails to start via the init.d after it's installed from the offical repo,
 
 This should kill your rabbit processes -> 
 
-        for x in $(ps -ef | grep -v grep | grep rabbit | awk '{print $2}'); do kill -9 "$x"; echo "PID "$x" killed"; done
+        for x in $(pgrep -f rabbit); do kill -9 $x; echo "PID $x killed"; done
 
 Iptables
 --------
