@@ -34,6 +34,7 @@ Rabbit fails to start via the init.d after it's installed from the offical repo,
 This should kill your rabbit processes -> 
 
         for x in $(pgrep -f rabbit); do kill -9 $x; echo "PID $x killed"; done
+        (or as moutons pointed out) pkill -SIGKILL -f rabbit
 
 Iptables
 --------
